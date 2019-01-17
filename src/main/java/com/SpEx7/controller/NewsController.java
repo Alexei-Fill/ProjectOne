@@ -22,7 +22,7 @@ public class NewsController {
 
     @RequestMapping("/newsList")
     @GetMapping
-    public String newsList(Model model){
+    public String newsList(Model model) {
         model.addAttribute("news", new News());
         model.addAttribute("newsList", newsService.listNews());
         return "newsList";
@@ -30,22 +30,26 @@ public class NewsController {
 
     @RequestMapping("/showAddNews")
     @GetMapping
-    public String showAddNews (){
+    public String showAddNews(Model model) {
+        model.addAttribute("news", new News());
         return "editNews";
     }
 
     @RequestMapping("/showEditNews/{id}")
     @GetMapping
-    public String showEditNews (@PathVariable("id") Integer id, Model model){
-        News news = newsService.getNewsById(id);
-        model.addAttribute("news", news);
+    public String showEditNews(@PathVariable("id") int id, Model model) {
+
+            News news = newsService.getNewsById(id);
+            model.addAttribute("news", news);
+
         return "editNews";
     }
 
     @RequestMapping("/editAddNews")
     @PostMapping
-    public String addEditNews (@ModelAttribute("news") News news){
-        if(news.getId() != 0){
+    public String addEditNews(@ModelAttribute("news") News news) {
+        System.out.println("in");
+        if (news.getId() == 0) {
             newsService.addNews(news);
         } else {
             newsService.updateNews(news);

@@ -11,7 +11,7 @@
 
 <c:url var="editAddNews" value="/editAddNews" ></c:url>
 
-<form:form action="${editAddNews}" modelAttribute="news">
+<form:form action="${editAddNews}" modelAttribute="news" >
     <table>
         <c:if test="${!empty news.title}">
             <tr>
@@ -63,7 +63,7 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="date" />
+                <form:input path="date" readonly="true" disabled="true"/>
             </td>
         </tr>
         <tr>
