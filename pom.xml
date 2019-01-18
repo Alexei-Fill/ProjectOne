@@ -65,6 +65,13 @@
       <version>${hibenate.version}</version>
     </dependency>
 
+    <!--<dependency>-->
+      <!--<groupId>org.hibernate</groupId>-->
+      <!--<artifactId>hibernate-jpamodelgen</artifactId>-->
+      <!--<version>${hibenate.version}</version>-->
+      <!--<scope>provided</scope>-->
+    <!--</dependency>-->
+
     <dependency>
       <groupId>oracle</groupId>
       <artifactId>ojdbc6</artifactId>

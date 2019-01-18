@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class NewsController {
 
@@ -48,7 +50,6 @@ public class NewsController {
     @RequestMapping("/editAddNews")
     @PostMapping
     public String addEditNews(@ModelAttribute("news") News news) {
-        System.out.println("in");
         if (news.getId() == 0) {
             newsService.addNews(news);
         } else {
@@ -57,4 +58,20 @@ public class NewsController {
         return "redirect: /newsList";
     }
 
+    @RequestMapping("/deleteNews")
+    @PostMapping
+    public String deleteNews(@RequestParam("removedNews") List<Integer> id) {
+        for (Integer i: id) {
+            newsService.deleteNews(i);
+        }
+        return "redirect: /newsList";
+    }
+
+    @RequestMapping("/news/{id}")
+    @GetMapping
+    public String showNews(@PathVariable("id") int id, Model model) {
+        News news = newsService.getNewsById(id);
+        model.addAttribute("news", news);
+        return "news";
+    }
 }

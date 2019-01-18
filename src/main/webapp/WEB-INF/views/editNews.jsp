@@ -33,7 +33,7 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="title" />
+                <form:input path="title" required="required"/>
             </td>
         </tr>
         <tr>
@@ -53,7 +53,7 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="content" />
+                <form:input path="content" required="required"/>
             </td>
         </tr>
         <tr>
@@ -63,18 +63,18 @@
                 </form:label>
             </td>
             <td>
-                <form:input path="date" readonly="true" disabled="true"/>
+                <form:input path="date" required="required" />
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <c:if test="${!empty news.title}">
                     <input type="submit"
-                           value="<spring:message text="Edit Person"/>" />
+                           value="<spring:message text="Edit News"/>" />
                 </c:if>
                 <c:if test="${empty news.title}">
                     <input type="submit"
-                           value="<spring:message text="Add Person"/>" />
+                           value="<spring:message text="Add News"/>" />
                 </c:if>
             </td>
         </tr>

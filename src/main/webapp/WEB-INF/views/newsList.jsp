@@ -10,6 +10,7 @@
 <body>
 
 <h1><a href="/showAddNews">ADD</a></h1>
+
 <c:if test="${!empty newsList}">
     <table class="tg">
         <tr>
@@ -22,19 +23,29 @@
             <th width="120"> <a>Delete</a></th>
 
         </tr>
+        <c:url var="deleteNews" value="/deleteNews" ></c:url>
+
+        <form action="${deleteNews}" modelAttribute="news" method="post" >
         <c:forEach items="${newsList}" var="news">
             <tr>
                 <td>${news.id}</td>
-                <td>${news.title}</td>
+                <td>
+                        ${news.title}
+                </td>
                 <td>${news.brief}</td>
                 <td>${news.content}</td>
                 <td>${news.date}</td>
-                <td><a>Edit</a>${news.date}</td>
-                <td><a>Delete</a>${news.date}</td>
+                <td><a href="/showEditNews/${news.id}">Edit</a></td>
+                <td><a href="/news/${news.id}">View</a></td>
+                <td><input type="checkbox" value="${news.id}" name="removedNews" checked="true"></td>
 
             </tr>
         </c:forEach>
+
     </table>
+    <input type="submit" value="delete"/>
+    </form>
 </c:if>
+
 </body>
 </html>

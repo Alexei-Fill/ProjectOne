@@ -2,16 +2,13 @@ package com.SpEx7.DAO;
 
 import com.SpEx7.entity.News;
 
+import com.SpEx7.entity.News_;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
-import java.time.LocalDate;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -26,7 +23,7 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public void addNews(News news) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(news);
+        session.save(news);
     }
 
     @Override
@@ -35,9 +32,12 @@ public class NewsDAOImpl implements NewsDAO {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaUpdate<News> criteriaQuery = criteriaBuilder.createCriteriaUpdate(News.class);
         Root<News> root = criteriaQuery.from(News.class);
-        criteriaQuery.set("news", news).where(criteriaBuilder.equal(root.get("id"), news.getId()));
-        Query query = session.createQuery(criteriaQuery);
-        List<News> listNews = query.getResultList();
+        criteriaQuery.set(News_.title, news.getTitle());
+        criteriaQuery.set(News_.brief, news.getBrief());
+        criteriaQuery.set(News_.content, news.getContent());
+        criteriaQuery.set(News_.date, news.getDate());
+        criteriaQuery.where(criteriaBuilder.equal(root.get(News_.id), news.getId()));
+        session.createQuery(criteriaQuery).executeUpdate();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class NewsDAOImpl implements NewsDAO {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<News> criteriaQuery = criteriaBuilder.createQuery(News.class);
         Root<News> root = criteriaQuery.from(News.class);
-        criteriaQuery.select(root);
+        criteriaQuery.select(root).orderBy(criteriaBuilder.asc(root.get(News_.date)),criteriaBuilder.asc(root.get(News_.id)));
         Query query = session.createQuery(criteriaQuery);
         List<News> listNews = query.getResultList();
         return  listNews;

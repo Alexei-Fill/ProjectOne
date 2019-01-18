@@ -1,5 +1,7 @@
 package com.SpEx7.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,11 +13,12 @@ public class News implements Serializable {
     private String title;
     private String brief;
     private String content;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
     @Id
     @Column(name = "NEWS_ID")
-    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE")
+    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newsGenerator")
     public int getId() {
         return id;
@@ -60,6 +63,9 @@ public class News implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public News() {
     }
 
     @Override
