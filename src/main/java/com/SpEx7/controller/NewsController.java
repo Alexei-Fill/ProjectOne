@@ -2,9 +2,9 @@ package com.SpEx7.controller;
 
 import com.SpEx7.entity.News;
 import com.SpEx7.service.NewsService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,33 +22,26 @@ public class NewsController {
         this.newsService = newsService;
     }
 
-    @RequestMapping("/newsList")
-    @GetMapping
+    @GetMapping("/newsList")
     public String newsList(Model model) {
-        model.addAttribute("news", new News());
+//        model.addAttribute("news", new News());
         model.addAttribute("newsList", newsService.listNews());
         return "newsList";
     }
 
-    @RequestMapping("/showAddNews")
-    @GetMapping
+    @GetMapping("/showAddNews")
     public String showAddNews(Model model) {
         model.addAttribute("news", new News());
         return "editNews";
     }
 
-    @RequestMapping("/showEditNews/{id}")
-    @GetMapping
+    @GetMapping("/showEditNews/{id}")
     public String showEditNews(@PathVariable("id") int id, Model model) {
-
-            News news = newsService.getNewsById(id);
-            model.addAttribute("news", news);
-
+        model.addAttribute("news", newsService.getNewsById(id));
         return "editNews";
     }
 
-    @RequestMapping("/editAddNews")
-    @PostMapping
+    @PostMapping("/editAddNews")
     public String addEditNews(@ModelAttribute("news") News news) {
         if (news.getId() == 0) {
             newsService.addNews(news);
@@ -58,17 +51,17 @@ public class NewsController {
         return "redirect: /newsList";
     }
 
-    @RequestMapping("/deleteNews")
-    @PostMapping
-    public String deleteNews(@RequestParam("removedNews") List<Integer> id) {
-        for (Integer i: id) {
-            newsService.deleteNews(i);
+    @PostMapping("/deleteNews")
+    public String deleteNews(@Nullable @RequestParam("removedNews") List<Integer> id) {
+        if (id != null) {
+            for (Integer i : id) {
+                newsService.deleteNews(i);
+            }
         }
         return "redirect: /newsList";
     }
 
-    @RequestMapping("/news/{id}")
-    @GetMapping
+    @GetMapping("/news/{id}")
     public String showNews(@PathVariable("id") int id, Model model) {
         News news = newsService.getNewsById(id);
         model.addAttribute("news", news);

@@ -4,10 +4,26 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <html>
+<LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
 <head>
-    <title>Title</title>
+    <c:if test="${!empty news.title}">
+        <title>Edit news</title>
+    </c:if>
+    <c:if test="${empty news.title}">
+        <title>Add news</title>
+    </c:if>
 </head>
 <body>
+<div class = "roof">
+    <b style="margin-bottom: 20px;" >News Management</b>
+    <b style="margin-left: 65%;"><a href="#" style="margin: 15px;">Russian</a> <a href="#" style="margin: 15px;">English</a></b>
+</div>
+<div class = "smenu">
+    <h2 align="center">News</h2>
+    <h4><a href="/newsList">News List</a></h4>
+    <h4><a href="/showAddNews">Add news</a></h4>
+</div>
+
 
 <c:url var="editAddNews" value="/editAddNews" ></c:url>
 

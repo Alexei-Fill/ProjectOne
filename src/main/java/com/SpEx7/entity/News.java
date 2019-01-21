@@ -1,8 +1,12 @@
 package com.SpEx7.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -18,9 +22,9 @@ public class News implements Serializable {
 
     @Id
     @Column(name = "NEWS_ID")
-//    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE", allocationSize = 1)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newsGenerator")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newsGenerator")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -30,6 +34,7 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_TITLE")
+    @NotNull
     public String getTitle() {
         return title;
     }
@@ -39,6 +44,7 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_BRIEF")
+    @Nullable
     public String getBrief() {
         return brief;
     }
@@ -48,6 +54,7 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_CONTENT")
+    @NotNull
     public String getContent() {
         return content;
     }
@@ -58,6 +65,7 @@ public class News implements Serializable {
 
 
     @Column(name = "NEWS_DATE")
+    @NotNull
     public LocalDate getDate() {
         return date;
     }

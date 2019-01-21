@@ -4,47 +4,38 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <html>
+<LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
 <head>
-    <title>Title</title>
+    <title>News</title>
 </head>
 <body>
+<div class = "roof">
+    <b style="margin-bottom: 20px;" >News Management</b>
+    <b style="margin-left: 65%;"><a href="#" style="margin: 15px;">Russian</a> <a href="#" style="margin: 15px;">English</a></b>
+</div>
+<div class = "smenu">
+    <h2 align="center">News</h2>
+    <h4><a href="/newsList">News List</a></h4>
+    <h4><a href="/showAddNews">Add news</a></h4>
+</div>
 
-<h1><a href="/showAddNews">ADD</a></h1>
 
 <c:if test="${!empty newsList}">
-    <table class="tg">
-        <tr>
-            <th width="80"> ID</th>
-            <th width="120"> Title</th>
-            <th width="120"> Brief</th>
-            <th width="120"> Content</th>
-            <th width="120"> Date</th>
-            <th width="120"> <a>Edit</a></th>
-            <th width="120"> <a>Delete</a></th>
-
-        </tr>
-        <c:url var="deleteNews" value="/deleteNews" ></c:url>
-
-        <form action="${deleteNews}" modelAttribute="news" method="post" >
+    <c:url var="deleteNews" value="/deleteNews" ></c:url>
+    <form action="${deleteNews}" modelAttribute="news" method="post" >
         <c:forEach items="${newsList}" var="news">
-            <tr>
-                <td>${news.id}</td>
-                <td>
-                        ${news.title}
-                </td>
-                <td>${news.brief}</td>
-                <td>${news.content}</td>
-                <td>${news.date}</td>
-                <td><a href="/showEditNews/${news.id}">Edit</a></td>
-                <td><a href="/news/${news.id}">View</a></td>
-                <td><input type="checkbox" value="${news.id}" name="removedNews" checked="true"></td>
-
-            </tr>
+    <div class="content" align="center">
+        <h4>Title news : ${news.title}  ${news.date}</h4>
+        <h5>${news.brief}</h5>
+        <a href="/news/${news.id}">View</a> <a href="/showEditNews/${news.id}">Edit</a>
+        <input type="checkbox" value="${news.id}" name="removedNews" >
+    </div>
         </c:forEach>
 
-    </table>
-    <input type="submit" value="delete"/>
+        <input type="submit" value="delete"/>
     </form>
+
+
 </c:if>
 
 </body>
