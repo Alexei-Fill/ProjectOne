@@ -7,21 +7,21 @@
 <LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
 <head>
     <c:if test="${!empty news.title}">
-        <title>Edit news</title>
+        <title><spring:message code="key.edit"/></title>
     </c:if>
     <c:if test="${empty news.title}">
-        <title>Add news</title>
+        <title><spring:message code="key.addNews"/></title>
     </c:if>
 </head>
 <body>
 <div class = "roof">
-    <b style="margin-bottom: 20px;" >News Management</b>
-    <b style="margin-left: 65%;"><a href="#" style="margin: 15px;">Russian</a> <a href="#" style="margin: 15px;">English</a></b>
+    <b style="margin-bottom: 20px;" ><spring:message code="key.newsManagment"/></b>
+    <b style="margin-left: 65%;"><a href="?lang=ru" style="margin: 15px;">Russian</a> <a href="?lang=en" style="margin: 15px;">English</a></b>
 </div>
 <div class = "smenu">
-    <h2 align="center">News</h2>
-    <h4><a href="/newsList">News List</a></h4>
-    <h4><a href="/showAddNews">Add news</a></h4>
+    <h2 align="center"><spring:message code="key.news"/></h2>
+    <h4><a href="/newsList"><spring:message code="key.newsList"/></a></h4>
+    <h4><a href="/showAddNews"><spring:message code="key.addNews"/></a></h4>
 </div>
 
 
@@ -29,34 +29,20 @@
 
 <form:form action="${editAddNews}" modelAttribute="news" >
     <table>
-        <c:if test="${!empty news.title}">
-            <tr>
-                <td>
-                    <form:label path="id">
-                        <spring:message text="ID"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="id" readonly="true" size="8"  disabled="true" />
-                    <form:hidden path="id" />
-                </td>
-            </tr>
-        </c:if>
         <tr>
             <td>
-                <form:label path="title">
-                    <spring:message text="title"/>
-                </form:label>
+                <form:input path="id" readonly="true" hidden = "true"/>
+                <spring:message code="key.title"/>
             </td>
             <td>
-                <form:input path="title" required="required"/>
+                <form:input path="title" />
+                <form:errors path="title" element="div"/>
             </td>
+            <form:errors path="title" element="h1"/>
         </tr>
         <tr>
             <td>
-                <form:label path="brief">
-                    <spring:message text="brief"/>
-                </form:label>
+                <spring:message code="key.brief"/>
             </td>
             <td>
                 <form:input path="brief" />
@@ -64,19 +50,17 @@
         </tr>
         <tr>
             <td>
-                <form:label path="content">
-                    <spring:message text="content"/>
-                </form:label>
+                <spring:message code="key.content"/>
             </td>
             <td>
-                <form:input path="content" required="required"/>
+                <form:textarea path="content" />
             </td>
+            <form:errors path="content"/>
+
         </tr>
         <tr>
             <td>
-                <form:label path="date">
-                    <spring:message text="date"/>
-                </form:label>
+                <spring:message code="key.date"/>
             </td>
             <td>
                 <form:input path="date" required="required" />
@@ -85,12 +69,10 @@
         <tr>
             <td colspan="2">
                 <c:if test="${!empty news.title}">
-                    <input type="submit"
-                           value="<spring:message text="Edit News"/>" />
+                    <input type="submit" value="<spring:message code="key.edit"/>" />
                 </c:if>
                 <c:if test="${empty news.title}">
-                    <input type="submit"
-                           value="<spring:message text="Add News"/>" />
+                    <input type="submit" value="<spring:message code="key.addNews"/>" />
                 </c:if>
             </td>
         </tr>

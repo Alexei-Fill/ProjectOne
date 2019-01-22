@@ -1,5 +1,6 @@
 package com.SpEx7.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
@@ -34,7 +35,8 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_TITLE")
-    @NotNull
+    @NotEmpty
+    @Size(max = 10, message = "foooo")
     public String getTitle() {
         return title;
     }
@@ -54,7 +56,7 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_CONTENT")
-    @NotNull
+    @NotEmpty
     public String getContent() {
         return content;
     }
@@ -65,7 +67,7 @@ public class News implements Serializable {
 
 
     @Column(name = "NEWS_DATE")
-    @NotNull
+
     public LocalDate getDate() {
         return date;
     }

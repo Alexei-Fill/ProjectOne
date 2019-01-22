@@ -29,13 +29,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<News> listNews() {
         return newsDAO.listNews();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public News getNewsById(int id) {
         return newsDAO.getNewsById(id);
     }

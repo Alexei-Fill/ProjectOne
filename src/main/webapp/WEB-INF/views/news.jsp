@@ -6,38 +6,38 @@
 <html>
 <LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
 <head>
-    <title>News View</title>
+    <title><spring:message code="key.newsView"/></title>
 
 </head>
 <body>
 <div class = "roof">
-    <b style="margin-bottom: 20px;" >News Management</b>
-    <b style="margin-left: 65%;"><a href="#" style="margin: 15px;">Russian</a> <a href="#" style="margin: 15px;">English</a></b>
+    <b style="margin-bottom: 20px;" ><spring:message code="key.newsManagment"/></b>
+    <b style="margin-left: 65%;"><a href="?lang=ru" style="margin: 15px;">Russian</a> <a href="?lang=en" style="margin: 15px;">English</a></b>
 </div>
 <div class = "smenu">
-    <h2 align="center">News</h2>
-    <h4><a href="/newsList">News List</a></h4>
-    <h4><a href="/showAddNews">Add news</a></h4>
+    <h2 align="center"><spring:message code="key.news"/></h2>
+    <h4><a href="/newsList"><spring:message code="key.newsList"/></a></h4>
+    <h4><a href="/showAddNews"><spring:message code="key.addNews"/></a></h4>
 </div>
 
 
 <form:form action="/deleteNews" modelAttribute="news" >
 
 
-    <spring:message text="Title news"/>
+    <spring:message code="key.title"/>
     <p>${news.title}</p>
     <h6></h6>
-    <spring:message text="Brief"/>    <p>${news.brief}</p>
+    <spring:message code="key.brief"/>   <p>${news.brief}</p>
     <h6></h6>
-        <spring:message text="Date"/>
+    <spring:message code="key.content"/>
     <p>${news.date}</p>
     <h6></h6>
-    <spring:message text="Content"/>
+    <spring:message code="key.date"/>
     <p>${news.content}</p>
     <h6></h6>
-    <a href="/showEditNews/${news.id}"><input type="button" value="Edit"/></a>
+    <a href="/showEditNews/${news.id}"><input type="button" value="<spring:message code="key.edit"/>"/></a>
     <input type="checkbox" value="${news.id}" name="removedNews" checked="true" hidden="true">
-    <input type="submit" value="delete"/>
+    <input type="submit" value="<spring:message code="key.delete"/>"/>
 
 
 
