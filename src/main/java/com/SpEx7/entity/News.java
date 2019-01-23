@@ -6,13 +6,14 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "NEWS")
+@NamedNativeQueries( @NamedNativeQuery(name = "@INSERT_INTO_NEWS",
+        query = "insert into NEWS (NEWS_ID, NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (NEWS_SEQUENCE.nextval, :brief, :content, :date_news, :title)"))
 public class News implements Serializable {
     private int id;
     private String title;
@@ -35,8 +36,8 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_TITLE")
-    @NotEmpty(message = "This field can't be empty!")
-    @Size(max = 200, message = "The title is too long!")
+    @NotEmpty(message = "{err.empty}")
+    @Size(max = 200, message = "{title.err.size}")
     public String getTitle() {
         return title;
     }
@@ -47,7 +48,7 @@ public class News implements Serializable {
 
     @Column(name = "NEWS_BRIEF")
     @Nullable
-    @Size(max = 400, message = "The brief is too long!")
+    @Size(max = 400, message = "{brief.err.size}")
     public String getBrief() {
         return brief;
     }
@@ -57,8 +58,8 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_CONTENT")
-    @NotEmpty(message = "This field can't be empty")
-    @Size(max = 2000, message = "The content of news is too long!")
+    @NotEmpty(message = "{err.empty}")
+    @Size(max = 2000, message = "{content.err.size}")
     public String getContent() {
         return content;
     }
@@ -69,7 +70,8 @@ public class News implements Serializable {
 
 
     @Column(name = "NEWS_DATE")
-    @NotNull(message = "This field can't be empty")
+    @NotNull(message = "{err.empty}")
+
     public LocalDate getDate() {
         return date;
     }
