@@ -36,9 +36,9 @@
             </td>
             <td>
                 <form:input path="title" />
-                <form:errors path="title" element="div"/>
+                <form:errors path="title" cssClass="error"/>
             </td>
-            <form:errors path="title" element="h1"/>
+
         </tr>
         <tr>
             <td>
@@ -46,6 +46,7 @@
             </td>
             <td>
                 <form:input path="brief" />
+                <form:errors path="brief" cssClass="error"/>
             </td>
         </tr>
         <tr>
@@ -54,16 +55,16 @@
             </td>
             <td>
                 <form:textarea path="content" />
+                <form:errors path="content" cssClass="error"/>
             </td>
-            <form:errors path="content"/>
-
         </tr>
         <tr>
             <td>
                 <spring:message code="key.date"/>
             </td>
             <td>
-                <form:input path="date" required="required" />
+                <form:input path="date"  />
+                <form:errors path="date" cssClass="error"/>
             </td>
         </tr>
         <tr>

@@ -35,8 +35,8 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_TITLE")
-    @NotEmpty
-    @Size(max = 10, message = "foooo")
+    @NotEmpty(message = "This field can't be empty!")
+    @Size(max = 200, message = "The title is too long!")
     public String getTitle() {
         return title;
     }
@@ -47,6 +47,7 @@ public class News implements Serializable {
 
     @Column(name = "NEWS_BRIEF")
     @Nullable
+    @Size(max = 400, message = "The brief is too long!")
     public String getBrief() {
         return brief;
     }
@@ -56,7 +57,8 @@ public class News implements Serializable {
     }
 
     @Column(name = "NEWS_CONTENT")
-    @NotEmpty
+    @NotEmpty(message = "This field can't be empty")
+    @Size(max = 2000, message = "The content of news is too long!")
     public String getContent() {
         return content;
     }
@@ -67,7 +69,7 @@ public class News implements Serializable {
 
 
     @Column(name = "NEWS_DATE")
-
+    @NotNull(message = "This field can't be empty")
     public LocalDate getDate() {
         return date;
     }
