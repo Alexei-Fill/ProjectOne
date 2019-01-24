@@ -7,12 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class NewsDAOImpl implements NewsDAO {
@@ -58,8 +58,8 @@ public class NewsDAOImpl implements NewsDAO {
         final String SQLQuery = "select * from NEWS";
         Query query = session.createNativeQuery(SQLQuery);
         List<News> listNews = new ArrayList<>();
-        List<Object[]> list =  ((NativeQuery) query).list();
-        for(Object[] obj: list){
+        List<Object[]> list = ((NativeQuery) query).list();
+        for (Object[] obj : list) {
             News news = new News();
             news.setId(Integer.parseInt(obj[0].toString()));
             news.setTitle(obj[1].toString());
@@ -70,7 +70,8 @@ public class NewsDAOImpl implements NewsDAO {
             news.setContent(obj[4].toString());
             listNews.add(news);
         }
-        return  listNews;
+        Collections.sort(listNews, Comparator.comparing(News::getDate).thenComparing(News::getTitle));
+        return listNews;
     }
 
     //JPQL
@@ -93,7 +94,7 @@ public class NewsDAOImpl implements NewsDAO {
         checkNewsQuery.setParameter(ID_NEWS, id);
         News news = (News) checkNewsQuery.getSingleResult();
         System.out.println(news.toString());
-        if (news !=null){
+        if (news != null) {
             Query deleteNewsQuery = session.createQuery(deleteNews);
             deleteNewsQuery.setParameter(ID_NEWS, id);
             deleteNewsQuery.executeUpdate();
