@@ -1,75 +1,39 @@
 package com.SpEx7.controller;
 
-import com.SpEx7.entity.News;
-import com.SpEx7.service.NewsService;
+import com.SpEx7.entity.User;
+import com.SpEx7.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
-public class NewsController {
+@SessionAttributes("user")
+public class UserController {
 
-    private NewsService newsService;
+    private UserService userService;
 
     @Autowired
-    @Qualifier("newsService")
-    public void setNewsService(NewsService newsService) {
-        this.newsService = newsService;
+    @Qualifier("userService")
+    public void setNewsService(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/newsList")
-    public String newsList(Model model) {
-        model.addAttribute("newsList", newsService.listNews());
-        return "newsList";
-    }
-
-    @GetMapping("/showAddNews")
-    public String showAddNews(Model model) {
-        model.addAttribute("news", new News());
-        return "editNews";
-    }
-
-    @GetMapping("/showEditNews/{id}")
-    public String showEditNews(@PathVariable("id") int id, Model model) {
-        model.addAttribute("news", newsService.getNewsById(id));
-        return "editNews";
-    }
-
-    @PostMapping("/editAddNews")
-    public String addEditNews(@Validated @ModelAttribute("news") News news, BindingResult result) {
-        if (result.hasErrors()){
-            return "editNews";
-        }else {
-            if (news.getId() == 0) {
-                newsService.addNews(news);
-            } else {
-                newsService.updateNews(news);
-            }
+    @PostMapping("/signIn")
+    public String authorization(@ModelAttribute("user") User user){
+        if(userService.authorization(user)){
             return "redirect: /newsList";
+        } else {
+            return "";
         }
     }
 
-    @PostMapping("/deleteNews")
-    public String deleteNews(@Nullable @RequestParam("removedNews") List<Integer> id) {
-        if (id != null) {
-            for (Integer i : id) {
-                newsService.deleteNews(i);
-            }
-        }
-        return "redirect: /newsList";
-    }
-
-    @GetMapping("/news/{id}")
-    public String showNews(@PathVariable("id") int id, Model model) {
-        News news = newsService.getNewsById(id);
-        model.addAttribute("news", news);
-        return "news";
+    @PostMapping("/signOut")
+    public String signOut(SessionStatus sessionStatus){
+        sessionStatus.setComplete();
+        return "";
     }
 }

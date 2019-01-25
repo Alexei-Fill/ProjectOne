@@ -1,4 +1,7 @@
 package com.SpEx7.DAO;
 
-public class UserDAO {
+import com.SpEx7.entity.User;
+
+public interface UserDAO {
+    boolean authorization (User user);
 }

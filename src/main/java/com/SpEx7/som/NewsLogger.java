@@ -1,6 +1,5 @@
 package com.SpEx7.som;
 
-import com.SpEx7.entity.News;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -39,8 +38,8 @@ public class NewsLogger {
         }
     }
 
-    @AfterThrowing(pointcut = "within(com.SpEx7)", throwing = "error")
-    private void afterThrowing(JoinPoint joinPoint, Throwable error) {
-        logger.info("Method Signature: " + joinPoint.getSignature() + "Exception: " + error);
-    }
+//    @AfterThrowing(pointcut = "within(com.SpEx7)", throwing = "error")
+//    private void afterThrowing(JoinPoint joinPoint, Throwable error) {
+//        logger.info("Method Signature: " + joinPoint.getSignature() + "Exception: " + error);
+//    }
 }

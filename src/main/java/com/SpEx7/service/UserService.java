@@ -1,4 +1,7 @@
 package com.SpEx7.service;
 
-public class UserService {
+import com.SpEx7.entity.User;
+
+public interface UserService {
+    boolean authorization (User user);
 }
