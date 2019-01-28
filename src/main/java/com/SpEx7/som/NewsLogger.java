@@ -37,9 +37,4 @@ public class NewsLogger {
             logger.info("The object number: " + obj.toString() + " has been deleted");
         }
     }
-
-//    @AfterThrowing(pointcut = "within(com.SpEx7)", throwing = "error")
-//    private void afterThrowing(JoinPoint joinPoint, Throwable error) {
-//        logger.info("Method Signature: " + joinPoint.getSignature() + "Exception: " + error);
-//    }
 }
