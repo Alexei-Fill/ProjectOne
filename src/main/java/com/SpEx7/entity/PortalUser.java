@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "PORTAL_USER")
-public class User implements Serializable {
+public class PortalUser implements Serializable {
     private int id;
     private String login;
     private String password;
@@ -46,7 +46,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "PortalUser{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

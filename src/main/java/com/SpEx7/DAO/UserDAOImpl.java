@@ -1,6 +1,6 @@
 package com.SpEx7.DAO;
 
-import com.SpEx7.entity.User;
+import com.SpEx7.entity.PortalUser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean authorization(User user) {
+    public PortalUser loadUserByUsername(String login) {
         Session session = sessionFactory.getCurrentSession();
-        User checkUser = session.get(User.class, user.getLogin());
-        return user.getPassword().equals(checkUser.getPassword());
+        PortalUser portalUser = session.get(PortalUser.class, login);
+        return portalUser;
     }
 }

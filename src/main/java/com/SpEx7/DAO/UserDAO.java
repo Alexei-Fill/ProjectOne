@@ -1,7 +1,7 @@
 package com.SpEx7.DAO;
 
-import com.SpEx7.entity.User;
+import com.SpEx7.entity.PortalUser;
 
 public interface UserDAO {
-    boolean authorization (User user);
+    PortalUser loadUserByUsername (String login);
 }

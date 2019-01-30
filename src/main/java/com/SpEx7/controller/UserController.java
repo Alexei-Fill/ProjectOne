@@ -1,23 +1,23 @@
 package com.SpEx7.controller;
 
-import com.SpEx7.entity.User;
 import com.SpEx7.service.UserService;
+import com.SpEx7.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
-    public void setNewsService(UserService userService) {
-        this.userService = userService;
+    public void setNewsService(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
 //    @PostMapping("/login")
-//    public String authorization(@ModelAttribute("user") User user) {
+//    public String authorization(@ModelAttribute("user") PortalUser user) {
 //        if (userService.authorization(user)) {
 //            return "redirect: /newsList";
 //        } else {
