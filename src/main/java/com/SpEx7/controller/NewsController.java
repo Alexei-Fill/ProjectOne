@@ -16,10 +16,9 @@ import java.util.List;
 @Controller
 public class NewsController {
 
+    @Autowired
     private NewsService newsService;
 
-    @Autowired
-    @Qualifier("newsService")
     public void setNewsService(NewsService newsService) {
         this.newsService = newsService;
     }

@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
-
+    @Autowired
     private UserService userService;
 
-    @Autowired
-    @Qualifier("userService")
     public void setNewsService(UserService userService) {
         this.userService = userService;
     }

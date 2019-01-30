@@ -1,9 +1,9 @@
-package com.SpEx7.som;
+package com.SpEx7.config;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@EnableWebSecurity
-public class wcs extends WebSecurityConfigurerAdapter {
+
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 }
