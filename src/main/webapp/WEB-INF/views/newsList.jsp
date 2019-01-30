@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
@@ -18,9 +17,7 @@
 <div class="smenu">
     <h2 align="center"><spring:message code="key.news"/></h2>
     <h4><a href="/newsList"><spring:message code="key.newsList"/></a></h4>
-    <security:authorize access="isAuthenticated()">
         <h4><a href="/showAddNews"><spring:message code="key.addNews"/></a></h4>
-    </security:authorize>
 </div>
 
 
@@ -36,17 +33,13 @@
 
                 <span style="float: right;">
            <a style="padding-right: 20px" href="/news/${news.id}"><spring:message code="key.view"/></a>
-           <security:authorize access="isAuthenticated()">
                <a style="padding-right: 20px" href="/showEditNews/${news.id}"><spring:message code="key.edit"/></a>
                <input type="checkbox" value="${news.id}" name="removedNews">
-           </security:authorize>
        </span>
                 <h5></h5>
             </div>
         </c:forEach>
-        <security:authorize access="isAuthenticated()">
         <input style="float: right;" type="submit" value="<spring:message code="key.delete"/>"/>
-        </security:authorize>
     </form>
 
 
