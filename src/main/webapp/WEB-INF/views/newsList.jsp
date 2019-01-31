@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
@@ -14,6 +15,16 @@
     <b style="margin-bottom: 20px;"><spring:message code="key.newsManagment"/></b>
     <b style="margin-left: 65%;"><a href="?lang=ru" style="margin: 15px;">Russian</a> <a href="?lang=en"
                                                                                          style="margin: 15px;">English</a></b>
+    <security:authorize access="isAnonymous()">
+        <a href="showLogin"> <spring:message code="key.signIn"/></a> / <a href="showReg"> <spring:message code="key.registration"/></a>
+    </security:authorize>
+    <security:authorize access="isAuthenticated()">
+        <spring:message code="key.youLoggedAs"/><b>   <sec:authentication property="principal.username"/></b>
+        <form action="/logout" method="post" style="float: right;">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input value="<spring:message code="key.signOut"/>" type="submit">
+        </form>
+    </security:authorize>
 </div>
 <div class="smenu">
     <h2 align="center"><spring:message code="key.news"/></h2>

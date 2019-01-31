@@ -3,8 +3,8 @@ package com.SpEx7.controller;
 import com.SpEx7.entity.News;
 import com.SpEx7.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,18 +29,21 @@ public class NewsController {
         return "newsList";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/showAddNews")
     public String showAddNews(Model model) {
         model.addAttribute("news", new News());
         return "editNews";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/showEditNews/{id}")
     public String showEditNews(@PathVariable("id") int id, Model model) {
         model.addAttribute("news", newsService.getNewsById(id));
         return "editNews";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/editAddNews")
     public String addEditNews(@Validated @ModelAttribute("news") News news, BindingResult result) {
         if (result.hasErrors()){
@@ -55,6 +58,7 @@ public class NewsController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/deleteNews")
     public String deleteNews(@Nullable @RequestParam("removedNews") List<Integer> id) {
         if (id != null) {
