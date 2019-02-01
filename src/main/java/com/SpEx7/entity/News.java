@@ -4,29 +4,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
-@Entity
-@Table(name = "NEWS")
-@NamedNativeQueries( @NamedNativeQuery(name = "@INSERT_INTO_NEWS",
-        query = "insert into NEWS (NEWS_ID, NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (NEWS_SEQUENCE.nextval, :brief, :content, :date_news, :title)"))
 public class News implements Serializable {
     private int id;
     private String title;
     private String brief;
     private String content;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate date;
+    private Date date;
 
-    @Id
-    @Column(name = "NEWS_ID")
-    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newsGenerator")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -35,7 +25,6 @@ public class News implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "NEWS_TITLE")
     @NotEmpty(message = "{err.empty}")
     @Size(max = 200, message = "{title.err.size}")
     public String getTitle() {
@@ -46,7 +35,6 @@ public class News implements Serializable {
         this.title = title;
     }
 
-    @Column(name = "NEWS_BRIEF")
     @Nullable
     @Size(max = 400, message = "{brief.err.size}")
     public String getBrief() {
@@ -57,7 +45,6 @@ public class News implements Serializable {
         this.brief = brief;
     }
 
-    @Column(name = "NEWS_CONTENT")
     @NotEmpty(message = "{err.empty}")
     @Size(max = 2000, message = "{content.err.size}")
     public String getContent() {
@@ -69,14 +56,12 @@ public class News implements Serializable {
     }
 
 
-    @Column(name = "NEWS_DATE")
     @NotNull(message = "{err.empty}")
-
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

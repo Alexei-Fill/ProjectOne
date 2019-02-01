@@ -6,7 +6,6 @@ import com.SpEx7.entity.News_;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@Repository
 public class NewsDAOImpl implements NewsDAO {
 
     private final String ID_NEWS = "id";
@@ -63,7 +61,7 @@ public class NewsDAOImpl implements NewsDAO {
             News news = new News();
             news.setId(Integer.parseInt(obj[0].toString()));
             news.setTitle(obj[1].toString());
-            news.setDate(LocalDate.parse(obj[2].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")));
+            news.setDate((Date) obj[2]);
             if (obj[3] != null) {
                 news.setBrief(obj[3].toString());
             }

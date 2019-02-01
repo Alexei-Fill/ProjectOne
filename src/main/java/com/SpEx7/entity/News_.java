@@ -1,6 +1,6 @@
 package com.SpEx7.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -10,7 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class News_ {
 
 	public static volatile SingularAttribute<News, String> brief;
-	public static volatile SingularAttribute<News, LocalDate> date;
+	public static volatile SingularAttribute<News, Date> date;
 	public static volatile SingularAttribute<News, Integer> id;
 	public static volatile SingularAttribute<News, String> title;
 	public static volatile SingularAttribute<News, String> content;

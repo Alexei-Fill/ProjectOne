@@ -48,6 +48,11 @@
 				<beans:value>com.SpEx7.entity.News</beans:value>
 			</beans:list>
 		</beans:property>
+		<beans:property name="mappingResources">
+			<beans:list>
+				<beans:value>User.hbn.xml</beans:value>
+			</beans:list>
+		</beans:property>
 		<beans:property name="hibernateProperties">
 			<beans:props>
 				<!--<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect-->
@@ -90,5 +95,15 @@
 		<beans:property name="basename" value="/WEB-INF/locales/message"/>
 		<beans:property name="defaultEncoding" value="UTF-8"/>
 	</beans:bean>
+
+	<beans:bean id="newsLogger" class="com.SpEx7.som.NewsLogger"/>
+
+	<aop:config>
+		<aop:aspect id = "logger" ref = "newsLogger">
+			<aop:before method="addLogging" pointcut= "execution(* add*(*)) &amp;&amp; within(com.SpEx7.DAO.*)"/>
+			<aop:before method="updateLogging" pointcut= "execution(* update*(*)) &amp;&amp; within(com.SpEx7.DAO.*)"/>
+			<aop:before method="deleteLogging" pointcut= "execution(* delete*(*)) &amp;&amp; within(com.SpEx7.DAO.*)"/>
+		</aop:aspect>
+	</aop:config>
 
 </beans:beans>

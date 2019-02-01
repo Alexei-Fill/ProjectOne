@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 public class NewsServiceImpl implements NewsService {
 
     private NewsDAO newsDAO;

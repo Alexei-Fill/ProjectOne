@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.SpEx7.entity.News" table="NEWS">
+        <id name="id" type="int">
+            <column name="NEWS_ID"/>
+            <generator class="sequence-identity">
+                <param name="sequence">NEWS_SEQUENCE</param>
+                <param name="parameters">allocationSize = 1</param>
+            </generator>
+        </id>
+        <property name="title" type="string">
+            <column name="NEWS_TITLE" not-null="true"/>
+        </property>
+        <property name="brief" type="string">
+            <column name="NEWS_BRIEF" not-null="false"/>
+        </property>
+        <property name="content" type="string">
+            <column name="NEWS_CONTENT" not-null="true"/>
+        </property>
+        <property name="date" type="date">
+            <column name="NEWS_DATE" not-null="true"/>
+        </property>
+    </class>
+    <sql-query name="@INSERT_INTO_NEWS">
+        insert into NEWS (NEWS_ID, NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (NEWS_SEQUENCE.nextval,
+        :brief, :content, :date_news, :title)
+    </sql-query>
+
+</hibernate-mapping>
