@@ -9,5 +9,5 @@ public interface NewsService {
     void updateNews (News news);
     List<News> listNews();
     News getNewsById(int Id);
-    void deleteNews(int Id);
+    void deleteNews(List<Integer> id);
 }

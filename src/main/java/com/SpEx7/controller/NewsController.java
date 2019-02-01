@@ -62,9 +62,7 @@ public class NewsController {
     @PostMapping("/deleteNews")
     public String deleteNews(@Nullable @RequestParam("removedNews") List<Integer> id) {
         if (id != null) {
-            for (Integer i : id) {
-                newsService.deleteNews(i);
-            }
+            newsService.deleteNews(id);
         }
         return "redirect: /newsList";
     }

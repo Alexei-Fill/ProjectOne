@@ -44,7 +44,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public void deleteNews(int id) {
-        newsDAO.deleteNews(id);
+    public void deleteNews(List<Integer> id) {
+        for (Integer i : id) {
+            newsDAO.deleteNews(i);
+        }
     }
 }
