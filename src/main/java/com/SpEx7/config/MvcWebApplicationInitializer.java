@@ -12,7 +12,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-public class MvcWebApplicationInitalizer implements WebApplicationInitializer {
+public class MvcWebApplicationInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -22,8 +22,8 @@ public class MvcWebApplicationInitalizer implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-        FilterRegistration.Dynamic encodingFilter =  servletContext.addFilter("encodingFilter", new CharacterEncodingFilter("UTF-8", true));
-        encodingFilter.addMappingForServletNames(null, false, "dispatcher");
+        dispatcher.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+
     }
 }
 

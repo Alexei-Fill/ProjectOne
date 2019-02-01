@@ -16,7 +16,7 @@
     <b style="margin-left: 65%;"><a href="?lang=ru" style="margin: 15px;">Russian</a> <a href="?lang=en"
                                                                                          style="margin: 15px;">English</a></b>
     <security:authorize access="isAnonymous()">
-        <a href="showLogin"> <spring:message code="key.signIn"/></a> / <a href="showReg"> <spring:message code="key.registration"/></a>
+        <a href="/showLogin"> <spring:message code="key.signIn"/></a> / <a href="/showReg"> <spring:message code="key.registration"/></a>
     </security:authorize>
     <security:authorize access="isAuthenticated()">
         <spring:message code="key.youLoggedAs"/><b>   <sec:authentication property="principal.username"/></b>
@@ -36,8 +36,7 @@
 
 
 <c:if test="${!empty newsList}">
-    <c:url var="deleteNews" value="/deleteNews"></c:url>
-    <form action="${deleteNews}" modelAttribute="news" method="post">
+    <form:form action="/deleteNews" modelAttribute="news">
         <c:forEach items="${newsList}" var="news">
             <div class="content" align="center">
                 <b><spring:message code="key.title"/></b>
@@ -58,7 +57,7 @@
         <security:authorize access="isAuthenticated()">
         <input style="float: right;" type="submit" value="<spring:message code="key.delete"/>"/>
         </security:authorize>
-    </form>
+    </form:form>
 
 
 </c:if>

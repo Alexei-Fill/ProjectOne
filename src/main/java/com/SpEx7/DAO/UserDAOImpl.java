@@ -35,11 +35,8 @@ public class UserDAOImpl implements UserDAO {
         Query query = session.createQuery(criteriaQuery);
         try {
             PortalUser portalUser = (PortalUser) query.getSingleResult();
-            System.out.println(portalUser.toString() + " daoooo");
             return portalUser;
         } catch (NoResultException nre){
-
-            System.out.println( " daoooo E" + query.getResultList().toString());
             return null;
         }
     }

@@ -37,7 +37,6 @@ public class UserController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/reg")
     public String signOut(@ModelAttribute("user") PortalUser user){
-        System.out.println(user.toString() + " cont");
         userServiceImpl.registration(user);
         return "redirect: /showLogin";
     }
