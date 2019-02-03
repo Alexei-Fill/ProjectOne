@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "NEWS")
 @NamedNativeQueries( @NamedNativeQuery(name = "@INSERT_INTO_NEWS",
+//        query = "insert into NEWS (NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (:brief, :content, :date_news, :title)"))
         query = "insert into NEWS (NEWS_ID, NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (NEWS_SEQUENCE.nextval, :brief, :content, :date_news, :title)"))
 public class News implements Serializable {
     private int id;
@@ -81,6 +82,14 @@ public class News implements Serializable {
     }
 
     public News() {
+    }
+
+    public News(int id, String title, String brief, String content, LocalDate date) {
+        this.id = id;
+        this.title = title;
+        this.brief = brief;
+        this.content = content;
+        this.date = date;
     }
 
     @Override

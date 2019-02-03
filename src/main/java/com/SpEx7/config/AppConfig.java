@@ -25,6 +25,7 @@ public class AppConfig {
         Properties props = new Properties();
         props.put(SHOW_SQL, "true");
         props.put(DIALECT, "org.hibernate.dialect.Oracle10gDialect");
+//        props.put(DIALECT, "org.hibernate.dialect.MySQLDialect");
         localSessionFactoryBean.setDataSource(hibernateDataSource());
         localSessionFactoryBean.setPackagesToScan("com.SpEx7.entity");
         localSessionFactoryBean.setHibernateProperties(props);
@@ -35,7 +36,9 @@ public class AppConfig {
     public DataSource hibernateDataSource(){
         BasicDataSource  dataSource = new BasicDataSource();
         dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+//        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:oracle:thin:@localhost:1521/xe");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/newsbd");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;

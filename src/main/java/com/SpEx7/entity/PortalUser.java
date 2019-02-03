@@ -16,6 +16,8 @@ public class PortalUser implements Serializable {
     @Column(name = "USER_ID")
     @SequenceGenerator(name = "userGenerator", sequenceName = "USER_SEQUENCE", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userGenerator")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public int getId() {
         return id;
     }

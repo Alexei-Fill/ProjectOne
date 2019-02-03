@@ -19,10 +19,6 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-    public void setNewsService(NewsService newsService) {
-        this.newsService = newsService;
-    }
-
     @GetMapping("/newsList")
     public String newsList(Model model) {
         model.addAttribute("newsList", newsService.listNews());

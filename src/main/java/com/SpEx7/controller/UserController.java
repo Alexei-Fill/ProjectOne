@@ -17,10 +17,6 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    public void setNewsService(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-    }
-
     @PreAuthorize("isAnonymous()")
     @GetMapping("/showLogin")
     public String showLogin() {
