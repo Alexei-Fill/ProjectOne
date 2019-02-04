@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin().defaultSuccessUrl("/newsList").failureUrl("/showLogin?error=true")
                 .loginPage("/showLogin").loginProcessingUrl("/login").permitAll().usernameParameter("login").passwordParameter("password")
                 .and().logout().logoutSuccessUrl("/showLogin").and().authorizeRequests().antMatchers("/newsList").permitAll()
-                .and().exceptionHandling().accessDeniedPage("/forbidden");
+                .and().exceptionHandling().accessDeniedPage("/forbidden").and().csrf().disable();
         CharacterEncodingFilter encodingFilter =   new CharacterEncodingFilter("UTF-8", true);
         http.addFilterBefore(encodingFilter, CsrfFilter.class);
     }

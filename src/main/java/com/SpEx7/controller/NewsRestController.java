@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -43,9 +44,9 @@ public class NewsRestController {
     }
 
     @DeleteMapping
-    public void deleteNews(@Nullable @RequestParam("removedNews") List<Integer> id) {
+    public void deleteNews(@RequestBody Integer[] id) {
         if (id != null) {
-            newsService.deleteNews(id);
+            newsService.deleteNews(Arrays.asList(id));
         }
     }
 }
