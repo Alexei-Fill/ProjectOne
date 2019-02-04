@@ -1,0 +1,44 @@
+<html xmlns:spring="http://www.springframework.org/tags" >
+<LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
+<head>
+    <title>
+       news
+    </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+</head>
+<body>
+<div ng-app="newsApp">
+<div ng-controller="NewsController">
+<form action="/deleteNews" >
+
+    <div  ng-repeat="news in newsList" class="content" align="center">
+        <b>
+            title
+        </b>
+        <span style="padding-left: 20px"> {{news.title}} </span>
+        <span style="float: right;"> <i><u>{{news.date}}</u></i></span>
+        <h5>{{news.brief}}</h5>
+
+        <span style="float: right;">
+            <a style="padding-right: 20px" href="/news/{{news.id}}">view</a>
+            <a style="padding-right: 20px" href="/showEditNews/{{news.id}}">edit</a>
+            <input type="checkbox" value="{{news.id}}" name="removedNews">
+       </span>
+        <h5></h5>
+    </div>
+    <input style="float: right;" type="submit" value="delete"/>
+</form>
+</div>
+</div>
+<script>
+    var newsApp = angular.module("newsApp", [])
+    newsApp.controller("NewsController", function ($scope, $http) {
+        $http.get("http://localhost:8786/newsR").then(function success (response) {
+            $scope.newsList = response;
+
+        })
+    })
+
+</script>
+</body>
+</html>
