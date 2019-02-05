@@ -1,44 +1,190 @@
-<html xmlns:spring="http://www.springframework.org/tags" >
+<html xmlns:spring="http://www.springframework.org/tags">
 <LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
 <head>
     <title>
-       news
+        news
     </title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
 </head>
 <body>
 <div ng-app="newsApp">
-<div ng-controller="NewsController">
-<form action="/deleteNews" >
+    <a href="#addNews">Add news</a>
+    <div ng-view></div>
 
-    <div  ng-repeat="news in newsList" class="content" align="center">
-        <b>
-            title
-        </b>
-        <span style="padding-left: 20px"> {{news.title}} </span>
-        <span style="float: right;"> <i><u>{{news.date}}</u></i></span>
-        <h5>{{news.brief}}</h5>
+    <script type="text/ng-template" id="addNews.htm">
+        <form name="newsForm">
+            title <input ng-model="news.title" required placeholder="Enter your title"/>
+            <h6></h6>
+            brief <input ng-model="news.brief" required/>
+            <h6></h6>
+            date <input ng-model="news.date" required/>
+            <h6></h6>
+            content <input ng-model="news.content" required/>
+            <h6></h6>
+            <button type="submit" ng-click="save(news, newsForm)">Save</button>
+        </form>
+    </script>
 
-        <span style="float: right;">
+    <script type="text/ng-template" id="editNews.htm">
+        <form name="newsForm">
+            title <input ng-model="news.title" required placeholder="Enter your title"/>
+            <h6></h6>
+            brief <input ng-model="news.brief" required/>
+            <h6></h6>
+            date <input ng-model="news.date" required/>
+            <h6></h6>
+            content <input ng-model="news.content" required/>
+            <h6></h6>
+            <button type="submit" ng-click="save(news, newsForm)">Save</button>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="viewNews.htm">
+        <div ng-repeat="news in newsList" class="content" align="center">
+            <b> title </b>
+            <span style="padding-left: 20px"> {{news.title}} </span>
+            <span style="float: right;"> <i><u>{{news.date}}</u></i></span>
+            <h5>{{news.brief}}</h5>
+            <span style="float: right;">
             <a style="padding-right: 20px" href="/news/{{news.id}}">view</a>
-            <a style="padding-right: 20px" href="/showEditNews/{{news.id}}">edit</a>
+              <button type="submit" ng-click="editNews(news)">edit</button>
             <input type="checkbox" value="{{news.id}}" name="removedNews">
        </span>
-        <h5></h5>
-    </div>
-    <input style="float: right;" type="submit" value="delete"/>
-</form>
-</div>
+            <h5></h5>
+        </div>
+        <input style="float: right;" type="submit" value="delete"/>
+    </script>
+
+    <!--<div ng-controller="NewsController">-->
+
+    <!--<form >-->
+    <!--<div  ng-repeat="news in newsList" class="content" align="center">-->
+    <!--<b> title  </b>-->
+    <!--<span style="padding-left: 20px"> {{news.title}} </span>-->
+    <!--<span style="float: right;"> <i><u>{{news.date}}</u></i></span>-->
+    <!--<h5>{{news.brief}}</h5>-->
+    <!--<span style="float: right;">-->
+    <!--<a style="padding-right: 20px" href="/news/{{news.id}}">view</a>-->
+    <!--<button type="submit" ng-click = "editNews(news)">edit</button>-->
+    <!--<input type="checkbox" value="{{news.id}}" name="removedNews">-->
+    <!--</span>-->
+    <!--<h5></h5>-->
+    <!--</div>-->
+    <!--<input style="float: right;" type="submit" value="delete"/>-->
+    <!--</form>-->
+    <!--</div>-->
+
+    <!--<div ng-controller="AddNewsController">-->
+    <!--<form name="newsForm">-->
+    <!--title-->
+    <!--<input id = "newsTitle" ng-model="news.title" required placeholder="Enter your title"/>-->
+    <!--<h6></h6>-->
+    <!--brief-->
+    <!--<input id = "newsBrief" ng-model="news.brief" required />-->
+    <!--<h6></h6>-->
+    <!--date-->
+    <!--<input id = "newsDate" ng-model="news.date" required />-->
+    <!--<h6></h6>-->
+    <!--content-->
+    <!--<input id = "newsContent" ng-model="news.content" required />-->
+    <!--<h6></h6>-->
+    <!--<button type="submit" ng-click = "save(news, newsForm)">Save</button>-->
+
+    <!--</form>-->
+    <!--</div>-->
+
+    <!--<div ng-controller="EditNewsController" id = "editNews">-->
+    <!--edit-->
+    <!--<form name="newsEditForm">-->
+    <!--title-->
+    <!--<input id = "newsETitle" ng-model="news.title" required placeholder="Enter your title"/>-->
+    <!--<h6></h6>-->
+    <!--brief-->
+    <!--<input id = "newsEBrief" ng-model="news.brief" required />-->
+    <!--<h6></h6>-->
+    <!--date-->
+    <!--<input id = "newsEDate" ng-model="news.date" required />-->
+    <!--<h6></h6>-->
+    <!--content-->
+    <!--<input id = "newsEContent" ng-model="news.content" required />-->
+    <!--<h6></h6>-->
+    <!--<button type="submit" ng-click = "save(news, newsForm)">Save</button>-->
+
+    <!--</form>-->
+    <!--</div>-->
 </div>
 <script>
-    var newsApp = angular.module("newsApp", [])
-    newsApp.controller("NewsController", function ($scope, $http) {
-        $http.get("http://localhost:8786/newsR").then(function success (response) {
-            $scope.newsList = response;
+    var newsApp = angular.module("newsApp", ['ngRoute']);
 
-        })
-    })
+    newsApp.service("NewsService", function () {
+        var saveDate = {}
 
+        function set(data) {
+            saveDate = data;
+        }
+
+        function get() {
+            return saveDate;
+        }
+
+        return {
+            set: set,
+            get: get
+        }
+    });
+
+    newsApp.config(['$routeProvider',
+        function($routeProvider) {
+            $routeProvider.
+            when('/addNews', {
+                templateUrl: 'addNews.htm',
+                controller: 'AddNewsController'
+            }).
+            when('/editNews', {
+                templateUrl: 'editNews.htm',
+                controller: 'EditNewsController'
+            }).
+            when('/viewNews', {
+                templateUrl: 'viewNews.htm',
+                controller: 'NewsController'
+            }).
+            otherwise({
+                redirectTo: '/viewUsers'
+            });
+        }]);
+
+    newsApp.controller("NewsController", function ($scope, $http, $location, NewsService) {
+        $http.get("http://localhost:8786/newsR").then(function success(response) {
+            $scope.newsList = response.data;
+        });
+        $scope.editNews = function (news) {
+            NewsService.set(news);
+            $location.path("/editNews")
+        }
+    });
+
+    newsApp.controller("AddNewsController", function ($scope, $http) {
+        $scope.response = {};
+        $scope.save = function (news, newsForm) {
+            if (newsForm.$valid) {
+                $http.post("http://localhost:8786/newsR", news).then(function success(response) {
+                    $scope.response = response.data;
+                });
+            }
+        }
+    });
+
+    newsApp.controller("EditNewsController", function ($scope, $http) {
+        $scope.response = {};
+        $scope.save = function (news, newsForm) {
+            if (newsForm.$valid) {
+                $http.post("http://localhost:8786/newsR", news).then(function success(response) {
+                    $scope.response = response.data;
+                });
+            }
+        }
+    });
 </script>
 </body>
 </html>
