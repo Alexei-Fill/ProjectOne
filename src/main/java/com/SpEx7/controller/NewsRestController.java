@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping(value = "/newsR")
 public class NewsRestController {
@@ -43,9 +44,10 @@ public class NewsRestController {
         return news;
     }
 
-    @DeleteMapping
-    public void deleteNews(@RequestBody Integer[] id) {
-        if (id != null) {
+    @DeleteMapping("/{id}")
+    public void deleteNews(@PathVariable("id") int id) {
+
+        if (id != 0) {
             newsService.deleteNews(Arrays.asList(id));
         }
     }

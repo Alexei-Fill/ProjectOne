@@ -78,11 +78,11 @@
             <span style="float: right;">
             <button type="submit" ng-click="viewNews(news)">view</button>
             <button type="submit" ng-click="editNews(news)">edit</button>
-            <input type="checkbox" value="{{news.id}}" name="removedNews">
+            <input type="checkbox" value="{{news.id}}" ng-click="select(news.id)">
        </span>
             <h5></h5>
         </div>
-        <input style="float: right;" type="submit" value="delete"/>
+        <input style="float: right;" type="submit" value="delete" ng-click="deleteNews()"/>
     </script>
 
     <script type="text/ng-template" id="viewNews.htm">
@@ -146,14 +146,26 @@
         $scope.editNews = function (news) {
             NewsService.set(news);
             $location.path("/editNews");
-        }
+        };
         $scope.viewNews = function (news) {
             NewsService.set(news.id);
             $location.path("/viewNews");
-        }
-        $scope.deleteNews = function (news) {
-            NewsService.set(news.id);
-            $location.path("/viewNews");
+        };
+        $scope.checkboxValuesArray = [];
+        $scope.select = function (checkBoxValue) {
+            var index = $scope.checkboxValuesArray.indexOf(checkBoxValue);
+            if (index > -1) {
+                $scope.checkboxValuesArray.splice(index, 1);
+            }
+            else {
+                $scope.checkboxValuesArray.push(checkBoxValue);
+            }
+        };
+        $scope.deleteNews = function () {
+            var deleteNews = $scope.checkboxValuesArray;
+            $http.delete("/newsR", deleteNews ).then(function success (response) {
+                $location.path("/viewNewsList");
+            })
         }
     });
 
