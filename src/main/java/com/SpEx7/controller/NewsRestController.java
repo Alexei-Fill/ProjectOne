@@ -32,22 +32,22 @@ public class NewsRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public News addNews(@RequestBody News news) {
+    public News addNews(@Validated @RequestBody News news) {
         newsService.addNews(news);
         return news;
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public News editNews(@RequestBody News news) {
+    public News editNews(@Validated @RequestBody News news) {
         newsService.updateNews(news);
         return news;
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteNews(@PathVariable("id") int id) {
-
-        if (id != 0) {
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteNews(@RequestBody Integer[] id) {
+        if (id != null) {
             newsService.deleteNews(Arrays.asList(id));
         }
     }
