@@ -140,7 +140,7 @@
         }]);
 
     newsApp.controller("NewsController", function ($scope, $http, $location, NewsService) {
-        $http.get("/newsR").then(function success(response) {
+        $http.get("/rest/news").then(function success(response) {
             $scope.newsList = response.data;
         });
         $scope.editNews = function (news) {
@@ -163,7 +163,7 @@
         };
         $scope.deleteNews = function () {
             var deleteNews = $scope.checkboxValuesArray;
-            $http.delete("/newsR", deleteNews ).then(function success (response) {
+            $http.delete("/rest/news", deleteNews ).then(function success (response) {
                 $location.path("/viewNewsList");
             })
         }
@@ -173,7 +173,7 @@
         $scope.response = {};
         $scope.save = function (news, newsForm) {
             if (newsForm.$valid) {
-                $http.post("/newsR", news).then(function success(response) {
+                $http.post("/rest/news", news).then(function success(response) {
                     $location.path("/viewNewsList");
                 });
             }
@@ -184,7 +184,7 @@
         $scope.news = NewsService.get();
         $scope.saveUser = function (news, newsForm) {
             if (newsForm.$valid) {
-                $http.put("/newsR", news).then(function success(response) {
+                $http.put("/rest/news", news).then(function success(response) {
                     $location.path("/viewNewsList");
                 });
             }
@@ -192,7 +192,7 @@
     });
 
     newsApp.controller("ViewNewsController", function ($scope, $http, NewsService) {
-        $http.get("/newsR/" + NewsService.get()).then(function success(response) {
+        $http.get("/rest/news/" + NewsService.get()).then(function success(response) {
             $scope.news = response.data;
         });
     });
