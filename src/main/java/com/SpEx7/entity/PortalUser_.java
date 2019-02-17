@@ -11,6 +11,7 @@ public abstract class PortalUser_ {
 	public static volatile SingularAttribute<PortalUser, String> password;
 	public static volatile SingularAttribute<PortalUser, Integer> id;
 	public static volatile SingularAttribute<PortalUser, String> login;
+	public static volatile SingularAttribute<PortalUser, String> token;
 
 }
 

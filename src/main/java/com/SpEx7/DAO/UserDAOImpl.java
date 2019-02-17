@@ -12,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 @Repository
@@ -46,5 +47,33 @@ public class UserDAOImpl implements UserDAO {
     public void addUser(PortalUser portalUser) {
         Session session = sessionFactory.getCurrentSession();
         session.persist( portalUser);
+    }
+
+    @Override
+    @Transactional
+    public void updateToken(String username, String token) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaUpdate<PortalUser> criteriaQuery = criteriaBuilder.createCriteriaUpdate(PortalUser.class);
+        Root<PortalUser> root = criteriaQuery.from(PortalUser.class);
+        criteriaQuery.set(root.get(PortalUser_.token), token).where(criteriaBuilder.equal(root.get(PortalUser_.login), username));
+       session.createQuery(criteriaQuery).executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public PortalUser loadUserByToken(String accessToken) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<PortalUser> criteriaQuery = criteriaBuilder.createQuery(PortalUser.class);
+        Root<PortalUser> root = criteriaQuery.from(PortalUser.class);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(PortalUser_.token), accessToken));
+        Query query = session.createQuery(criteriaQuery);
+        try {
+            PortalUser portalUser = (PortalUser) query.getSingleResult();
+            return portalUser;
+        } catch (NoResultException nre){
+            return null;
+        }
     }
 }
