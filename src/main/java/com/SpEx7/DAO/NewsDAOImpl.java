@@ -65,8 +65,8 @@ public class NewsDAOImpl implements NewsDAO {
             News news = new News();
             news.setId(Integer.parseInt(obj[0].toString()));
             news.setTitle(obj[1].toString());
-//            news.setDate(LocalDate.parse(obj[2].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")));
-            news.setDate(LocalDate.parse(obj[2].toString()));
+            news.setDate(LocalDate.parse(obj[2].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")));
+//            news.setDate(LocalDate.parse(obj[2].toString()));
             if (obj[3] != null) {
                 news.setBrief(obj[3].toString());
             }

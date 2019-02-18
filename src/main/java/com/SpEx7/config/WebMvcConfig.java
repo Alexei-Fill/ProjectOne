@@ -68,4 +68,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         converter.getObjectMapper().findAndRegisterModules();
         converters.add(converter);
     }
+
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//       registry.addMapping("/**");
+//    }
 }

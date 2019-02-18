@@ -24,7 +24,7 @@ public class CustomUsernamePasswordAuthenticationFilter  extends UsernamePasswor
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
         LoginRequest loginRequest = this.getLoginRequest(request);
 
-        if (!request.getMethod().equals("POST")) {
+        if (!request.getMethod().equals("POST") && (userService.getUserByUsername(loginRequest.getName()) == null)) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
 

@@ -41,4 +41,11 @@ public class UserController {
     public String forbidden(){
         return "forbidden";
     }
+
+
+    @PreAuthorize("isAnonymous()")
+    @GetMapping("/showLoginRest")
+    public String showLoginRest() {
+        return "loginRest";
+    }
 }

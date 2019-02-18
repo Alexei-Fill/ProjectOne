@@ -5,6 +5,7 @@ import com.SpEx7.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class NewsRestController {
     }
 
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public News addNews(@Validated @RequestBody News news) {
@@ -37,6 +39,7 @@ public class NewsRestController {
         return news;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public News editNews(@Validated @RequestBody News news) {
@@ -44,6 +47,7 @@ public class NewsRestController {
         return news;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void deleteNews(@RequestBody Integer[] id) {
