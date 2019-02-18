@@ -6,4 +6,8 @@ public interface UserDAO {
     PortalUser loadUserByUsername (String login);
 
     void addUser(PortalUser portalUser);
+
+    void updateToken(String username, String token);
+
+    PortalUser loadUserByToken(String accessToken);
 }
