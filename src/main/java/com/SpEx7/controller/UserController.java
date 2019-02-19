@@ -42,10 +42,4 @@ public class UserController {
         return "forbidden";
     }
 
-
-    @PreAuthorize("isAnonymous()")
-    @GetMapping("/showLoginRest")
-    public String showLoginRest() {
-        return "loginRest";
-    }
 }

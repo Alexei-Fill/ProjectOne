@@ -12,15 +12,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.Arrays;
 
@@ -31,12 +28,10 @@ public class WebSecurityConfigRest extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
-//    @Autowired
-//    private AuthenticationUserDetailsService authenticationUserDetailsService;
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
@@ -53,33 +48,15 @@ public class WebSecurityConfigRest extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        TokenAuthenticationFilter tokenFilter = new TokenAuthenticationFilter(userServiceImpl);
-        http.addFilterBefore(tokenFilter, BasicAuthenticationFilter.class);
-        http.addFilterBefore(customUsernamePasswordAuthenticationFilter(), CustomUsernamePasswordAuthenticationFilter.class);
-
+        TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter(userServiceImpl);
+        http.addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class);
+        http.addFilterBefore(customUsernamePasswordAuthenticationFilter(), CustomUsernamePasswordAuthFilter.class);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
+                .and().authorizeRequests().antMatchers("/rest/news").permitAll()
+                .and().logout();
         http.csrf().disable();
         http.cors().configurationSource(corsConfigurationSource());
-
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.exceptionHandling()
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/rest/news").permitAll()
-
-                .antMatchers("/**").permitAll()
-                .and()
-                .logout();
-//
-//        http.authorizeRequests().anyRequest().permitAll()
-//                .and().authorizeRequests().antMatchers("/showLogin**").anonymous()
-//                .and().formLogin().defaultSuccessUrl("/newsList").failureUrl("/showLogin?error=true")
-//                .loginPage("/showLogin").loginProcessingUrl("/login").permitAll().usernameParameter("login").passwordParameter("password")
-//                .and().logout().logoutSuccessUrl("/showLogin").and().authorizeRequests().antMatchers("/newsList").permitAll()
-//                .and().exceptionHandling().accessDeniedPage("/forbidden").and().csrf().disable();
-//        CharacterEncodingFilter encodingFilter =   new CharacterEncodingFilter("UTF-8", true);
-//        http.addFilterBefore(encodingFilter, CsrfFilter.class);
     }
 
     @Bean
@@ -96,15 +73,14 @@ public class WebSecurityConfigRest extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter()
+    public CustomUsernamePasswordAuthFilter customUsernamePasswordAuthenticationFilter()
             throws Exception {
-        CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter = new CustomUsernamePasswordAuthenticationFilter(userServiceImpl);
-        customUsernamePasswordAuthenticationFilter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
-        customUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
-        customUsernamePasswordAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
-        customUsernamePasswordAuthenticationFilter
-                .setAuthenticationManager(authenticationManagerBean());
-        return customUsernamePasswordAuthenticationFilter;
+        CustomUsernamePasswordAuthFilter customUsernamePasswordAuthFilter = new CustomUsernamePasswordAuthFilter();
+        customUsernamePasswordAuthFilter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
+        customUsernamePasswordAuthFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
+        customUsernamePasswordAuthFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
+        customUsernamePasswordAuthFilter.setAuthenticationManager(authenticationManagerBean());
+        return customUsernamePasswordAuthFilter;
     }
 
     @Bean
@@ -112,7 +88,7 @@ public class WebSecurityConfigRest extends WebSecurityConfigurerAdapter {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
-         configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

@@ -1,6 +1,6 @@
 package com.SpEx7.entity;
 
-public class LoginRequest {
+public class AuthenticationData {
     private String name;
     private String password;
 
