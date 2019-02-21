@@ -4,6 +4,7 @@ import com.SpEx7.DAO.NewsDAO;
 import com.SpEx7.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,10 +14,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Autowired
     private NewsDAO newsDAO;
-
-    public void setNewsDAO(NewsDAO newsDAO) {
-        this.newsDAO = newsDAO;
-    }
 
     @Override
     @Transactional
@@ -31,13 +28,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<News> listNews() {
         return newsDAO.listNews();
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public News getNewsById(int id) {
         return newsDAO.getNewsById(id);
     }
