@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 public class CustomUsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
@@ -22,7 +24,8 @@ public class CustomUsernamePasswordAuthFilter extends UsernamePasswordAuthentica
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
         AuthenticationData authenticationData = this.getLoginRequest(request);
-        if (!request.getMethod().equals("POST") && (userService.getUserByUsername(authenticationData.getName()) == null)) {
+
+        if (!request.getMethod().equals(POST) && (userService.getUserByUsername(authenticationData.getName()) == null)) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
         UsernamePasswordAuthenticationToken authenticationRequest =

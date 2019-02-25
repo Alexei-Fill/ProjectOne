@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/showLogin").loginProcessingUrl("/login").permitAll().usernameParameter("login").passwordParameter("password")
                 .and().logout().logoutSuccessUrl("/showLogin").and().authorizeRequests().antMatchers("/newsList").permitAll()
                 .and().exceptionHandling().accessDeniedPage("/forbidden").and().csrf().disable();
-        CharacterEncodingFilter encodingFilter =   new CharacterEncodingFilter("UTF-8", true);
+        CharacterEncodingFilter encodingFilter =   new CharacterEncodingFilter(UTF_8.toString(), true);
         http.addFilterBefore(encodingFilter, CsrfFilter.class);
     }
 

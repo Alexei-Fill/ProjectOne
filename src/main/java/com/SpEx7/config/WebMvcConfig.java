@@ -14,6 +14,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.List;
 import java.util.Locale;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.SpEx7.controller")
@@ -32,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("/WEB-INF/locales/message");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setDefaultEncoding(UTF_8.toString());
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }

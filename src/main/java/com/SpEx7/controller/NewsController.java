@@ -15,6 +15,8 @@ import java.util.List;
 
 @Controller
 public class NewsController {
+    private final static String REDIRECT_TO_MAIN = "redirect: /newsList";
+    private final static String TO_EDIT_NEWS = "editNews";
 
     @Autowired
     private NewsService newsService;
@@ -29,28 +31,28 @@ public class NewsController {
     @GetMapping("/showAddNews")
     public String showAddNews(Model model) {
         model.addAttribute("news", new News());
-        return "editNews";
+        return TO_EDIT_NEWS;
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/showEditNews/{id}")
     public String showEditNews(@PathVariable("id") int id, Model model) {
         model.addAttribute("news", newsService.getNewsById(id));
-        return "editNews";
+        return TO_EDIT_NEWS;
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/editAddNews")
     public String addEditNews(@Validated @ModelAttribute("news") News news, BindingResult result) {
         if (result.hasErrors()){
-            return "editNews";
+            return TO_EDIT_NEWS;
         }else {
             if (news.getId() == 0) {
                 newsService.addNews(news);
             } else {
                 newsService.updateNews(news);
             }
-            return "redirect: /newsList";
+            return REDIRECT_TO_MAIN;
         }
     }
 
@@ -60,7 +62,7 @@ public class NewsController {
         if (id != null) {
             newsService.deleteNews(id);
         }
-        return "redirect: /newsList";
+        return REDIRECT_TO_MAIN;
     }
 
     @GetMapping("/news/{id}")

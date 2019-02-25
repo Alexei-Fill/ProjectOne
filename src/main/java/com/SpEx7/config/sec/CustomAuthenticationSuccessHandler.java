@@ -8,10 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.security.SecureRandom;
 
 @Component
@@ -28,6 +26,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         random.nextBytes(bytes);
         String token = bytes.toString();
         userService.updateToken(username, token);
-        response.addCookie(TokenCookie.createTokenCookie(token, 1800));
+        response.addCookie(TokenCookie.createTokenCookie(token));
     }
 }

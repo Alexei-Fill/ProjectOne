@@ -1,12 +1,9 @@
 package com.SpEx7.controller;
 
 import com.SpEx7.entity.PortalUser;
-import com.SpEx7.service.UserService;
 import com.SpEx7.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

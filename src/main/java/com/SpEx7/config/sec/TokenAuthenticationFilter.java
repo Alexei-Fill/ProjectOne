@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
+    private final boolean ENABLED = true;
+    private final boolean ACCOUNT_NON_EXPIRED = true;
+    private final boolean CREDENTIALS_NON_EXPIRED = true;
+    private final boolean ACCOUNT_NON_LOCKED = true;
     private UserServiceImpl userService;
 
     public TokenAuthenticationFilter(UserServiceImpl userService) {
@@ -31,17 +35,18 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String accessToken = null;
         if (cookie != null) {
             accessToken = cookie.getValue();
-            response.addCookie(TokenCookie.createTokenCookie(accessToken, 1800));
+            response.addCookie(TokenCookie.createTokenCookie(accessToken));
         }
         if (accessToken != null ) {
            PortalUser userEntity = userService.getUserByToken(accessToken);
+
             final User user = new User(
                     userEntity.getLogin(),
                     userEntity.getPassword(),
-                    true,
-                    true,
-                    true,
-                    true,
+                    ENABLED,
+                    ACCOUNT_NON_EXPIRED,
+                    CREDENTIALS_NON_EXPIRED,
+                    ACCOUNT_NON_LOCKED,
                     Collections.emptyList());
             final UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

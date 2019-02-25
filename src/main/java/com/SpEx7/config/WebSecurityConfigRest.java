@@ -2,7 +2,6 @@ package com.SpEx7.config;
 
 import com.SpEx7.config.sec.*;
 import com.SpEx7.service.UserServiceImpl;
-import com.sun.org.apache.xalan.internal.utils.XMLSecurityPropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +21,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -88,8 +89,8 @@ public class WebSecurityConfigRest extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200/"));
+        configuration.setAllowedMethods(Arrays.asList(DELETE.toString(),POST.toString(),PUT.toString(),GET.toString(),HEAD.toString(),OPTIONS.toString()));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
