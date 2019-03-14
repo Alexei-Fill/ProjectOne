@@ -14,8 +14,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "NEWS")
 @NamedNativeQueries( @NamedNativeQuery(name = "@INSERT_INTO_NEWS",
-//        query = "insert into NEWS (NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (:brief, :content, :date_news, :title)"))
-        query = "insert into NEWS (NEWS_ID, NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (NEWS_SEQUENCE.nextval, :brief, :content, :date_news, :title)"))
+        query = "insert into NEWS (NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (:brief, :content, :date_news, :title)"))
+//        query = "insert into NEWS (NEWS_ID, NEWS_BRIEF, NEWS_CONTENT, NEWS_DATE, NEWS_TITLE ) values (NEWS_SEQUENCE.nextval, :brief, :content, :date_news, :title)"))
 public class News implements Serializable {
     private int id;
     private String title;
@@ -27,9 +27,9 @@ public class News implements Serializable {
 
     @Id
     @Column(name = "NEWS_ID")
-    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newsGenerator")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @SequenceGenerator(name = "newsGenerator", sequenceName = "NEWS_SEQUENCE", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newsGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
