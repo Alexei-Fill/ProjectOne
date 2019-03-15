@@ -6,7 +6,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <html>
-<LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
+<LINK TYPE="text/css" rel="stylesheet" href=<c:url value="/resources/news.css"/>/>
 <head>
     <c:if test="${!empty news.title}">
         <title><spring:message code="key.edit"/></title>

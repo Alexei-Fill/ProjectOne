@@ -7,7 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<LINK TYPE="text/css" rel="stylesheet" href="/resources/news.css"/>
+<LINK TYPE="text/css" rel="stylesheet" href=<c:url value="/resources/news.css"/>/>
 <head>
     <title>Login</title>
 </head>
