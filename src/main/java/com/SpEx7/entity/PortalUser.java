@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "PORTAL_USER")
@@ -22,8 +23,9 @@ public class PortalUser implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public PortalUser setId(int id) {
         this.id = id;
+        return this;
     }
 
     @Column(name = "USER_LOGIN")
@@ -32,8 +34,9 @@ public class PortalUser implements Serializable {
         return login;
     }
 
-    public void setLogin(String login) {
+    public PortalUser setLogin(String login) {
         this.login = login;
+        return this;
     }
 
     @Column(name = "USER_PASSWORD")
@@ -42,8 +45,9 @@ public class PortalUser implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) {
+    public PortalUser setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     @Column(name = "TOKEN")
@@ -51,8 +55,9 @@ public class PortalUser implements Serializable {
         return token;
     }
 
-    public void setToken(String token) {
+    public PortalUser setToken(String token) {
         this.token = token;
+        return this;
     }
 
     @Override
@@ -62,5 +67,31 @@ public class PortalUser implements Serializable {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PortalUser that = (PortalUser) o;
+        return id == that.id &&
+                Objects.equals(login, that.login) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(token, that.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, token);
+    }
+
+    public PortalUser(int id, String login, String password, String token) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.token = token;
+    }
+
+    public PortalUser() {
     }
 }

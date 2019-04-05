@@ -8,9 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -43,7 +43,7 @@ public class NewsController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/editAddNews")
-    public String addEditNews(@Validated @ModelAttribute("news") News news, BindingResult result) {
+    public String addEditNews(@Valid @ModelAttribute("news") News news, BindingResult result) {
         if (result.hasErrors()){
             return TO_EDIT_NEWS;
         }else {
@@ -71,4 +71,5 @@ public class NewsController {
         model.addAttribute("news", news);
         return "news";
     }
+
 }

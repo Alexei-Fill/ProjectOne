@@ -120,7 +120,7 @@
         }
     });
 
-    newsApp.config(['$routeProvider',
+    newsApp.com.SpEx7.config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider.when('/addNews', {
                 templateUrl: 'addNews.htm',

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "NEWS")
@@ -103,5 +104,22 @@ public class News implements Serializable {
                 ", content='" + content + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        News news = (News) o;
+        return id == news.id &&
+                title.equals(news.title) &&
+                Objects.equals(brief, news.brief) &&
+                content.equals(news.content) &&
+                date.equals(news.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, brief, content, date);
     }
 }

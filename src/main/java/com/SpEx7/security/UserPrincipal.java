@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public class UserPrincipal implements UserDetails {
 
@@ -51,5 +52,18 @@ public class UserPrincipal implements UserDetails {
 
     public PortalUser getPortalUser() {
         return portalUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserPrincipal that = (UserPrincipal) o;
+        return portalUser.equals(that.portalUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(portalUser);
     }
 }

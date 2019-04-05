@@ -1,6 +1,7 @@
 package com.SpEx7.service;
 
 import com.SpEx7.DAO.UserDAO;
+import com.SpEx7.DAO.UserDAOImpl;
 import com.SpEx7.entity.PortalUser;
 import com.SpEx7.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
