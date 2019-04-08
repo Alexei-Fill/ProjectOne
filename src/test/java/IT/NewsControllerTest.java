@@ -30,11 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ContextConfiguration(classes = {AppConfig.class, WebSecurityConfig.class, WebMvcConfig.class})
 @WebAppConfiguration
 public class NewsControllerTest {
-
 
     @Autowired
     private WebApplicationContext wac;
@@ -42,6 +42,7 @@ public class NewsControllerTest {
 
     @Autowired
     NewsController newsController;
+
 
     News testNews = new News(190, "Test title", "Test brief", "Test content", LocalDate.now());
 
